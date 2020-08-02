@@ -1,4 +1,4 @@
-from django.conf.urls import include, url
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from .views import UserViewSet
@@ -9,5 +9,5 @@ router.register(r'users', UserViewSet)
 
 # The API URLs are now determined automatically by the router.
 urlpatterns = [
-    url('^', include((router.urls, 'users')))
+    path('', include(router.urls)),
 ]
