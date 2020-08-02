@@ -51,6 +51,7 @@ class User(models.Model):
     updated = models.DateTimeField(_('updated'), default=timezone.now)
 
     class Meta:
+        app_label = _('users')
         verbose_name = _('user')
         verbose_name_plural = _('users')
-        ordering = ('created',)
+        ordering = ('-created',)
