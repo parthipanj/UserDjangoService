@@ -1,5 +1,6 @@
 import uuid
 
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from django.utils import timezone
@@ -7,6 +8,11 @@ from django.utils.translation import gettext_lazy as _
 
 
 class User(models.Model):
+
+    def user_directory_path(instance, filename):
+        # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+        return 'uploads/user_{0}/{1}'.format(instance.id, filename)
+
     username_validator = UnicodeUsernameValidator()
 
     class Gender(models.TextChoices):
@@ -35,7 +41,7 @@ class User(models.Model):
     email = models.EmailField(_('Email Address'), blank=True)
     mobile_number = models.CharField(_('Mobile Number'), blank=True, max_length=20)
     password = models.CharField(_('password'), max_length=128, blank=False, null=False)
-    avatar = models.ImageField(_('avatar'), blank=True)
+    avatar = models.ImageField(_('avatar'), blank=True, null=True, upload_to=user_directory_path)
     dob = models.DateField(_('Date of Birth'), blank=True, null=True)
     gender = models.CharField(_('gender'), blank=True, max_length=1, choices=Gender.choices)
     last_login = models.DateTimeField(_('last login'), blank=True, null=True)
@@ -55,3 +61,8 @@ class User(models.Model):
         verbose_name = _('user')
         verbose_name_plural = _('users')
         ordering = ('-created',)
+
+    def save(self, *args, **kwargs):
+        self.password = make_password(self.password)
+        self.updated = timezone.now()
+        super(User, self).save(*args, **kwargs)
