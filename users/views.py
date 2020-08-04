@@ -2,6 +2,7 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.exceptions import NotFound
+from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
 from rest_framework.response import Response
 
 from .models import User
@@ -58,10 +59,11 @@ class UserViewSet(viewsets.ModelViewSet):
         """
         queryset = User.objects.all()
 
-        # page = self.paginate_queryset(queryset)
-        # if page is not None:
-        #     serializer = self.get_serializer(page, many=True)
-        #     return self.get_paginated_response(serializer.data)
+        paginator = LimitOffsetPagination()
+        page = paginator.paginate_queryset(queryset=queryset, request=request)
+        if page is not None:
+            serializer = UserSerializer(page, many=True)
+            return paginator.get_paginated_response(serializer.data)
 
         serializer = UserSerializer(queryset, many=True)
         return response(data=serializer.data)
