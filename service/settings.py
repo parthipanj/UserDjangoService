@@ -128,5 +128,6 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.AdminRenderer',
-    ]
+    ],
+    # 'EXCEPTION_HANDLER': 'service.utils.custom_exception_handler'
 }
