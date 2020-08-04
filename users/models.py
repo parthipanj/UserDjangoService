@@ -8,10 +8,11 @@ from django.utils.translation import gettext_lazy as _
 
 
 class User(models.Model):
+    objects = models.Manager()
 
-    def user_directory_path(instance, filename):
+    def user_directory_path(self, filename):
         # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-        return 'uploads/user_{0}/{1}'.format(instance.id, filename)
+        return 'uploads/user_{0}/{1}'.format(self.id, filename)
 
     username_validator = UnicodeUsernameValidator()
 
