@@ -121,6 +121,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Django REST framework settings
+# https://www.django-rest-framework.org/api-guide/settings/
+
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
@@ -130,6 +133,9 @@ REST_FRAMEWORK = {
     ],
     # 'EXCEPTION_HANDLER': 'service.utils.custom_exception_handler'
 }
+
+# Logging
+# https://docs.djangoproject.com/en/3.0/topics/logging/
 
 LOGGING = {
     'version': 1,
@@ -159,17 +165,17 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': './logs/debug.log',
+            'filename': './debug.log',
             'formatter': 'verbose'
         },
     },
     'root': {
-        'handlers': ['console', 'file'],
+        'handlers': ['console'],
         'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
             'propagate': True,
         },
