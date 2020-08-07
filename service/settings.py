@@ -128,21 +128,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
 MEDIA_URL = '/media/'
+
 MEDIA_ROOT = BASE_DIR + '/media/'
-
-# Django REST framework settings
-# https://www.django-rest-framework.org/api-guide/settings/
-
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.AdminRenderer',
-    ],
-    'EXCEPTION_HANDLER': 'service.utils.custom_exception_handler'
-}
 
 # Logging
 # https://docs.djangoproject.com/en/3.0/topics/logging/
@@ -191,3 +180,21 @@ LOGGING = {
         },
     }
 }
+
+# Django REST framework settings
+# https://www.django-rest-framework.org/api-guide/settings/
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.AdminRenderer',
+    ],
+    'EXCEPTION_HANDLER': 'service.utils.custom_exception_handler'
+}
+
+# ImageField use_url value
+# https://www.django-rest-framework.org/api-guide/fields/#imagefield
+
+UPLOADED_FILES_USE_URL = False
