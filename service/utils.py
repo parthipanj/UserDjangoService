@@ -4,14 +4,18 @@ from rest_framework.views import exception_handler
 
 
 def custom_exception_handler(exc, context):
-    # Call REST framework's default exception handler first,
-    # to get the standard error response.
+    """
+    Custom Exception Handler
+    Call REST framework's default exception handler first to get the standard error response.
+    :param exc:
+    :param context:
+    :return:
+    """
     exc_response = exception_handler(exc, context)
 
-    # Now add the HTTP status code to the response.
+    # Now add the errors and data to the response.
     if exc_response is not None:
-        exc_response.data['errors'] = exc_response.status_text
-        exc_response.data['data'] = None
+        return response(errors=exc_response.data, status=exc.status_code)
 
     return exc_response
 

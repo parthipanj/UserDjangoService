@@ -140,7 +140,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.AdminRenderer',
     ],
-    # 'EXCEPTION_HANDLER': 'service.utils.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'service.utils.custom_exception_handler'
 }
 
 # Logging
