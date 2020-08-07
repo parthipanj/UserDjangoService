@@ -53,7 +53,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'service.middleware.response.ResponseMiddleware',
 ]
 
 ROOT_URLCONF = 'service.urls'
@@ -130,18 +129,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Django REST framework settings
-# https://www.django-rest-framework.org/api-guide/settings/
+MEDIA_URL = '/media/'
 
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.AdminRenderer',
-    ],
-    'EXCEPTION_HANDLER': 'service.utils.custom_exception_handler'
-}
+MEDIA_ROOT = BASE_DIR + '/media/'
 
 # Logging
 # https://docs.djangoproject.com/en/3.0/topics/logging/
@@ -190,3 +180,21 @@ LOGGING = {
         },
     }
 }
+
+# Django REST framework settings
+# https://www.django-rest-framework.org/api-guide/settings/
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.AdminRenderer',
+    ],
+    'EXCEPTION_HANDLER': 'service.utils.custom_exception_handler'
+}
+
+# ImageField use_url value
+# https://www.django-rest-framework.org/api-guide/fields/#imagefield
+
+UPLOADED_FILES_USE_URL = False
