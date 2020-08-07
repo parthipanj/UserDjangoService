@@ -53,7 +53,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'service.middleware.response.ResponseMiddleware',
 ]
 
 ROOT_URLCONF = 'service.urls'
@@ -129,6 +128,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR + '/media/'
 
 # Django REST framework settings
 # https://www.django-rest-framework.org/api-guide/settings/

@@ -8,13 +8,21 @@ from django.utils.translation import gettext_lazy as _
 
 
 class User(models.Model):
+    """
+    User Model
+    """
+
     objects = models.Manager()
+    username_validator = UnicodeUsernameValidator()
 
     def user_directory_path(self, filename):
+        """
+        Format the user directory path
+        :param filename:
+        :return:
+        """
         # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-        return 'uploads/user_{0}/{1}'.format(self.id, filename)
-
-    username_validator = UnicodeUsernameValidator()
+        return 'user_{0}/{1}'.format(self.id, filename)
 
     class Gender(models.TextChoices):
         MALE = 'M', _('MALE')
@@ -57,13 +65,20 @@ class User(models.Model):
     created = models.DateTimeField(_('created'), auto_now_add=True)
     updated = models.DateTimeField(_('updated'), default=timezone.now)
 
+    def save(self, *args, **kwargs):
+        """
+        Save a user instance
+        Turn a plain-text password into a hash for database storage
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        self.password = make_password(self.password)
+        self.updated = timezone.now()
+        super(User, self).save(*args, **kwargs)
+
     class Meta:
         app_label = _('users')
         verbose_name = _('user')
         verbose_name_plural = _('users')
         ordering = ('-created',)
-
-    def save(self, *args, **kwargs):
-        self.password = make_password(self.password)
-        self.updated = timezone.now()
-        super(User, self).save(*args, **kwargs)
