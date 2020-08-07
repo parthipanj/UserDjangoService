@@ -11,8 +11,13 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 import os
 
+from dotenv import load_dotenv
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# ENV
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -20,10 +25,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'j#oe!wy_8s$e+7=jcafgj^_^^z4&jgp9-&^=j7hb=vouxn)tof'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+ENVIRONMENT = os.getenv('ENVIRONMENT', 'develop')
 
-ALLOWED_HOSTS = []
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = int(os.getenv('DEBUG', 1))
+
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
 
 # Application definition
 
@@ -75,9 +82,11 @@ WSGI_APPLICATION = 'service.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_rest_service',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        'NAME': os.getenv('MYSQL_NAME', 'django_rest_service'),
+        'USER': os.getenv('MYSQL_USER', None),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD', None),
+        'HOST': os.getenv('MYSQL_HOST', '127.0.0.1'),
+        'PORT': os.getenv('MYSQL_PORT', '3306'),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  # https://docs.djangoproject.com/en/3.0/ref
             # /databases/#setting-sql-mode
@@ -171,12 +180,12 @@ LOGGING = {
     },
     'root': {
         'handlers': ['console'],
-        'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
+        'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
     },
     'loggers': {
         'django': {
             'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'level': 'INFO',
             'propagate': True,
         },
     }
