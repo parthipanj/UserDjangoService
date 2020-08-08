@@ -29,13 +29,13 @@ Once `pip` has finished downloading the dependencies:
 ```sh
 (env)$ python manage.py runserver
 ```
-And navigate to `http://127.0.0.1:8000/users`.
+And navigate to `http://127.0.0.1:8000`.
 
 ## Tests
 
 To run the tests, `cd` into the directory where `manage.py` is:
 ```sh
-(env)$ python manage.py test gc_app
+(env)$ python manage.py test users
 ```
 
 ## Features
@@ -58,11 +58,10 @@ $ docker build -t ${image_name}:${tag} .
 $ docker image ls
 ```
 
-Deploy the MySQL service using the stack file. 
-The MySQL stack file is available in another [repository](https://github.com/parthipanj/DockerStack/blob/master/mysql.yml).
+Make sure you MySQL running in your system. If not deploy the MySQL service using this [stack](https://github.com/parthipanj/DockerStack/blob/master/mysql.yml) file.
 Need to download and deploy it separately.
 
-**Note: First make sure you have the mysql image in local. And change the MySQL image name, root password as per your configuration**
+**Note: Make sure you have the mysql image in local. And change the MySQL image name, root password in the stack file as per your configuration**
 
 ```sh
 $ docker stack deploy -c mysql.yml ${appname}
@@ -81,6 +80,3 @@ $ docker stack ls     # To check the stack is deployed
 $ docker service ls   # To check the service is created
 $ docker container ls # To check the container is up and running
 ```
-
-
-
