@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  user:
+    image: userdjangoservice:1.0.0
+    deploy:
+      labels:
+        com.user.description: 'User Service developed with Django REST framework'
+      mode: replicated
+      replicas: 1
+      placement:
+        max_replicas_per_node: 3
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 60s
+      update_config:
+        parallelism: 1
+        delay: 10s
+    command: python manage.py runserver 0.0.0.0:8000
+    configs:
+      - source: user-env
+        target: /code/.env
+    env_file:
+      - ./config/user.env
+    environment:
+      ENVIRONMENT: develop
+    healthcheck:
+      disable: true
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '10'
+    networks:
+      - host
+    ports:
+      - target: 8000
+        published: 8000
+        protocol: tcp
+        mode: host
+    volumes:
+      - type: volume
+        source: userservice
+        target: /code/media
+        volume:
+          nocopy: false
+
+configs:
+  user-env:
+    file: ./config/env.yml
+
+volumes:
+  userservice:
+    external: false
+
+networks:
+  host:
