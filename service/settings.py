@@ -197,4 +197,4 @@ REST_FRAMEWORK = {
 # ImageField use_url value
 # https://www.django-rest-framework.org/api-guide/fields/#imagefield
 
-UPLOADED_FILES_USE_URL = False
+UPLOADED_FILES_USE_URL = int(os.getenv('UPLOADED_FILES_USE_URL', 0))
