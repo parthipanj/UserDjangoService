@@ -27,7 +27,7 @@ services:
         delay: 10s
     command: python manage.py runserver 0.0.0.0:8000
     configs:
-      - source: user-env-1
+      - source: user-env
         target: /code/.env
     env_file:
       - ./config/user.env
@@ -55,7 +55,7 @@ services:
           nocopy: false
 
 configs:
-  user-env-1:
+  user-env:
     file: ./config/env.yml
 
 volumes:
