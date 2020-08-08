@@ -5,7 +5,8 @@ from .models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    avatar = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=UPLOADED_FILES_USE_URL)
+    avatar = serializers.ImageField(required=False, allow_null=True, max_length=None, allow_empty_file=True,
+                                    use_url=UPLOADED_FILES_USE_URL)
 
     class Meta:
         model = User
