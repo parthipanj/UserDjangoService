@@ -71,7 +71,7 @@ class UserViewSet(viewsets.ModelViewSet):
         logging.info('type=%s msg=%s' % (constants.USER_LIST_API_SUCCESS, 'User list fetched successfully'))
         return response(data=serializer.data)
 
-    def get_object(self):
+    def __get_object(self):
         """
         Retrieve a user model instance.
         :return:
@@ -92,7 +92,7 @@ class UserViewSet(viewsets.ModelViewSet):
         """
         logging.info('type=%s msg=%s' % (constants.USER_RETRIEVE_API_INIT, 'User retrieve API initiated'))
 
-        instance = self.get_object()
+        instance = self.__get_object()
         serializer = self.get_serializer(instance)
 
         logging.info('type=%s msg=%s' % (constants.USER_RETRIEVE_API_SUCCESS, 'User detail retrieved successfully'))
@@ -114,7 +114,7 @@ class UserViewSet(viewsets.ModelViewSet):
             constants.USER_UPDATE_API_IS_PARTIAL, 'User request is for with or without partial update',
             {'is_partial': partial}))
 
-        instance = self.get_object()
+        instance = self.__get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         if serializer.is_valid(raise_exception=False):
             self.perform_update(serializer)
@@ -148,7 +148,7 @@ class UserViewSet(viewsets.ModelViewSet):
         """
         logging.info('type=%s msg=%s' % (constants.USER_DESTROY_API_INIT, 'User destroy API initiated'))
 
-        instance = self.get_object()
+        instance = self.__get_object()
         self.perform_destroy(instance)
 
         logging.info('type=%s msg=%s' % (constants.USER_DESTROY_API_SUCCESS, 'User deleted successfully'))
